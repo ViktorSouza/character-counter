@@ -1,1 +1,1 @@
-A simple app to count how many each caracterer is in your text
+A simple app to count how many each characterer is in your text

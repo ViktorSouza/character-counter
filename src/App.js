@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Head from './components/head/head'
+import { useRef, useState } from 'react'
+import Infos from './components/infos/infos.js'
+import Settings from './components/settings/settings.js'
+import { useSettings } from './useSettings.js'
+import './App.css'
+import { useTheme } from './themes/useTheme'
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [text, setText] = useState('')
+	const [settings, setSettings] = useSettings()
+	const [theme, setTheme] = useTheme()
+	const textAreaRef = useRef('')
+	return (
+		<div className='main-page'>
+			<Head
+				setText={setText}
+				setSettings={setSettings}
+				refTextArea={textAreaRef}
+			/>
+			{settings.isSettingsOpen && (
+				<Settings settings={settings} setSettings={setSettings} />
+			)}
+			<Infos text={text} {...settings} refTextArea={textAreaRef} />
+		</div>
+	)
 }
 
-export default App;
+export default App

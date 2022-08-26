@@ -1,0 +1,9 @@
+.text-area{
+    background: var(--bg4);
+
+    border: solid 1px var(--main-color);
+    border-radius: 5px;
+    color: #eee;
+
+    padding: 5px;
+}

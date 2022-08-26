@@ -5,27 +5,25 @@ function Settings({ settings, setSettings }) {
 	console.table(settings)
 	return (
 		<div className='settings'>
-<div style={{
-	display:'flex'
-	,justifyContent:'space-between'
-	,alignItems:'center'
-}}>
-			<h1>Settings</h1>
-			<span onClick={()=>setSettings(oldValues=>{
-				return{...oldValues, isSettingsOpen:!oldValues.isSettingsOpen}
-			})}>X</span>
-</div>
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'space-between',
+					alignItems: 'center',
+				}}
+			>
+				<h1>Settings</h1>
+				<span
+					onClick={() =>
+						setSettings((oldValues) => {
+							return { ...oldValues, isSettingsOpen: false }
+						})
+					}
+				>
+					X
+				</span>
+			</div>
 			<table className='settings-table'>
-				<tr>
-					<th className='setting-name'>Include spaces</th>
-					<th className='setting'>
-						<Checkbox
-							isChecked={settings.includeSpaces}
-							setSettings={setSettings}
-							propName={'includeSpaces'}
-						/>
-					</th>
-				</tr>
 				<tr>
 					<th className='setting-option'>Sort</th>
 					<th className='setting'>
@@ -53,12 +51,33 @@ function Settings({ settings, setSettings }) {
 					</th>
 				</tr>
 				<tr>
+					<th className='setting-name'>Ignore spaces</th>
+					<th className='setting'>
+						<Checkbox
+							isChecked={settings.ignoreSpaces}
+							setSettings={setSettings}
+							propName={'ignoreSpaces'}
+						/>
+					</th>
+				</tr>
+				<tr>
 					<th className='setting-name'>Ignore case</th>
 					<th className='setting'>
 						<Checkbox
 							isChecked={settings.ignoreCase}
 							setSettings={setSettings}
 							propName='ignoreCase'
+						/>
+					</th>
+				</tr>
+
+				<tr>
+					<th className='setting-name'>Ignore special characters</th>
+					<th className='setting'>
+						<Checkbox
+							isChecked={settings.ignoreSpecialChars}
+							setSettings={setSettings}
+							propName='ignoreSpecialChars'
 						/>
 					</th>
 				</tr>

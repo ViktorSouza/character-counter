@@ -4,6 +4,7 @@
     border: solid 1px var(--main-color);
     border-radius: 5px;
     color: #eee;
-
+    max-height: 265px;
+    overflow-y: scroll;
     padding: 5px;
 }

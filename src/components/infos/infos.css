@@ -21,12 +21,10 @@ table.infos-table {
 .infos-table tr:hover {
 	background-color: var(--bg3);
 }
-/* .infos-table tr:nth-child(even) {
-	background-color: var(--bg3);
-} */
 .infos-table td {
 	position: relative;
 }
+
 .percentageDiv {
 	background: #00ffff42;
 	height: 100%;

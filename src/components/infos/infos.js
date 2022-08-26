@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './infos.css'
 import { sortLetters } from './utils.js'
 export default function Infos({
@@ -6,11 +6,13 @@ export default function Infos({
 	text,
 	sortMethod,
 	ignoreCase,
-	includeSpaces,
+	ignoreSpaces,
+	ignoreSpecialChars,
 }) {
 	const [info, setInfo] = useState(Object.entries({}))
 	const [maxValue, setMaxValue] = useState(0)
 	const [letterHighlighted, setLetterHighlighted] = useState('')
+	const currentLetterHighlighted = useRef(letterHighlighted)
 	useEffect(() => {
 		let lettersCount = {}
 		let modifiedText = text
@@ -18,7 +20,8 @@ export default function Infos({
 			modifiedText = text.toLowerCase()
 		}
 		modifiedText.split('').forEach((letter) => {
-			if (letter === ' ' && !includeSpaces) return
+			if (/[\n\r\s\t]+/g.test(letter) && ignoreSpaces) return
+			if (ignoreSpecialChars && !/^[\w&.\-]+$/.test(letter)) return
 			lettersCount[letter] = (Number(lettersCount[letter]) || 0) + 1
 		})
 		let lettersInfo = Object.entries(lettersCount)
@@ -28,7 +31,7 @@ export default function Infos({
 		// console.table(lettersInfo)
 		setMaxValue(maxNumber)
 		setInfo(lettersInfo)
-	}, [text, includeSpaces, sortMethod, ignoreCase])
+	}, [text, ignoreSpaces, sortMethod, ignoreCase, ignoreSpecialChars])
 
 	useEffect(() => {
 		let firstTime = true
@@ -62,12 +65,25 @@ export default function Infos({
 					return (
 						<tr>
 							<td
-								onMouseEnter={() => {
+								onClick={() => {
+									console.log('clicked')
+									currentLetterHighlighted.current = letter[0]
 									setLetterHighlighted(letter[0])
 								}}
-								onMouseLeave={() => setLetterHighlighted('')}
+								onMouseLeave={(e) =>
+									setTimeout(() => {
+										if (
+											currentLetterHighlighted.current !==
+											letterHighlighted
+										)
+											return
+										setLetterHighlighted('')
+									}, 500)
+								}
 							>
-								{letter[0] !== ' ' ? letter[0] : '[space]'}
+								{!/[\n\r\s\t]+/g.test(letter[0])
+									? letter[0]
+									: '[space]'}
 							</td>
 							<td>
 								<span className='amount-text'>{letter[1]}</span>{' '}
@@ -89,7 +105,7 @@ export default function Infos({
 }
 
 function setEndOfContenteditable(contentEditableElement) {
-	var range, selection
+	let range, selection
 	if (document.createRange) {
 		//Firefox, Chrome, Opera, Safari, IE 9+
 		range = document.createRange() //Create a range (a range is a like the selection but invisible)

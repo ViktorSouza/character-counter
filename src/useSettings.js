@@ -3,9 +3,10 @@ function useSettings() {
 	const [settings, setSettings] = useState(
 		JSON.parse(window.localStorage.getItem('settings')) || {
 			sortMethod: 'BIGGEST',
-			includeSpaces: true,
+			ignoreSpaces: true,
 			ignoreCase: true,
-			isSettingsOpen:false
+			isSettingsOpen:false,
+			ignoreSpecialChars:false
 		}
 	)
 
@@ -20,7 +21,7 @@ function useSettings() {
 
 	useEffect(() => {
 		window.localStorage.setItem('settings', JSON.stringify(settings))
-	}, [settings.ignoreCase, settings.includeSpaces, settings.sortMethod])
+	}, [settings.ignoreCase, settings.ignoreSpaces, settings.sortMethod, settings.isSettingsOpen, settings.ignoreSpecialChars])
 
 	return [settings, setSettings]
 }

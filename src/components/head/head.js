@@ -27,7 +27,6 @@ export default function Head({ refTextArea, setText, setSettings }) {
 						}
 					})
 				}
-				style={{ color: 'black' }}
 			>
 				Settings
 			</button>

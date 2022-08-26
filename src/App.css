@@ -1,12 +1,39 @@
+@import url(https://fonts.googleapis.com/css?family=Noto+Serif+HK:200,300,regular,500,600,700,800,900);
 body {
 	background: var(--bg1);
 }
 * {
 	color: #eee;
+	font-family: 'Noto Serif';
 }
 select {
 	background: var(--bg2);
 	padding: 5px 10px;
 	border-radius: 5px;
 	border: solid 1px cyan;
+}
+
+button {
+	background: var(--bg4);
+	border: solid var(--main-color) 1px;
+	color: var(--maintext1);
+	border-radius: 5px;
+	padding: 5px 10px;
+	margin: 10px 0px 10px 0px;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--bg5);
+}
+::-webkit-scrollbar-thumb {
+	background: var(--main-color);
+	border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: var(--bg5);
 }

@@ -2,6 +2,7 @@ import Head from './components/head/head'
 import { useRef, useState } from 'react'
 import Infos from './components/infos/infos.js'
 import Settings from './components/settings/settings.js'
+import TextInfos from './components/textinfos/textinfo.js'
 import { useSettings } from './useSettings.js'
 import './App.css'
 import { useTheme } from './themes/useTheme'
@@ -17,9 +18,12 @@ function App() {
 				setSettings={setSettings}
 				refTextArea={textAreaRef}
 			/>
+<div className='settings-textinfos'>
 			{settings.isSettingsOpen && (
 				<Settings settings={settings} setSettings={setSettings} />
 			)}
+			<TextInfos refTextArea={textAreaRef} text={text} {...settings}/>
+</div>
 			<Infos text={text} {...settings} refTextArea={textAreaRef} />
 		</div>
 	)

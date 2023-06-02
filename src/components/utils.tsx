@@ -1,4 +1,7 @@
-export function sortLetters(sortMethod, lettersInfo) {
+export function sortLetters(
+	sortMethod: string,
+	lettersInfo: [string, number][],
+) {
 	switch (sortMethod) {
 		case 'BIGGEST':
 			return lettersInfo.sort((letter1, letter2) =>

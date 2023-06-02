@@ -1,5 +1,5 @@
 import Checkbox from './checkbox'
-import { ISettings } from '../types/ISettings'
+import { ISettings, ISortMethods } from '../types/ISettings'
 import { Options } from './Options'
 function Settings({
 	settings,
@@ -8,18 +8,28 @@ function Settings({
 	settings: ISettings
 	setSettings: React.Dispatch<React.SetStateAction<ISettings>>
 }) {
+	const sortMethods = [
+		'SMALLEST',
+		'NEWEST',
+		'OLDEST',
+		'ALPHABETIC',
+		'BIGGEST',
+	] as ISortMethods[]
 	return (
-		<div className='group-focus-within:block bg-gray-900 top-10 hidden px-2 py-1 rounded absolute'>
+		<div className='group-focus-within:block group-focus-visible:block group-focus:block bg-gray-900 top-10 hidden px-2 py-1 rounded absolute'>
 			<table className=''>
 				<tr>
 					<th className=''>Sort</th>
 					<th className='setting'>
 						<Options
 							title='Sort'
-							options={Object.entries(settings).map((setting) => ({
-								name: setting[0],
+							options={sortMethods.map((method) => ({
+								name: method.toLowerCase(),
 								onClick() {
-									console.log('Hey')
+									setSettings((current) => ({
+										...current,
+										sortMethod: method,
+									}))
 								},
 							}))}
 						/>

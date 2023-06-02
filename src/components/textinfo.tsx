@@ -1,4 +1,3 @@
-import { useEvent } from '@testing-library/user-event'
 export default function TextInfos({
 	refTextArea,
 	text,

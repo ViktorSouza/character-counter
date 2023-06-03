@@ -8,8 +8,8 @@ export default function Head({
 	setSettings: React.Dispatch<React.SetStateAction<ISettings>>
 }) {
 	return (
-		<>
+		<div className='mb-5'>
 			<h1 className='text-4xl font-semibold mb-5'>Letters counter</h1>
-		</>
+		</div>
 	)
 }

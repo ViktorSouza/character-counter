@@ -4,22 +4,22 @@ import Infos from './components/infos'
 import Settings from './components/settings'
 import TextInfos from './components/textinfo'
 import { useSettings } from './hooks/useSettings'
-import { useTheme } from './hooks/useTheme'
+// import { useTheme } from './hooks/useTheme'
 
 function App() {
 	const [text, setText] = useState('')
 	const [settings, setSettings] = useSettings()
-	const [theme, setTheme] = useTheme()
+	// const [theme, setTheme] = useTheme()
 	const textAreaRef = useRef<HTMLDivElement>(null)
 
 	return (
-		<main className='bg-gray-950 w-full min-h-screen px-8 py-4'>
+		<main className='bg-gray-950 w-full min-h-screen  px-8 py-4 '>
 			<Head
 				setText={setText}
 				setSettings={setSettings}
 			/>
-			<div className=' flex flex-col md:grid  grid-cols-10'>
-				<div className=' col-span-4'>
+			<div className='flex flex-col md:flex-row h-full w-full '>
+				<div className='w-full md:w-4/12 '>
 					<div className='group relative'>
 						<button className='bg-gray-900 px-2 py-1 rounded mb-5 peer'>
 							Settings

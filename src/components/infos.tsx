@@ -1,4 +1,4 @@
-import { Ref, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { sortLetters } from './utils'
 import 'chart.js/auto'
 import {
@@ -15,7 +15,7 @@ import { Bar } from 'react-chartjs-2'
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 export default function Infos({
-	refTextArea,
+	// refTextArea,
 	text,
 	sortMethod,
 	ignoreCase,
@@ -31,7 +31,7 @@ export default function Infos({
 	ignoreSpecialChars: boolean
 }) {
 	const [info, setInfo] = useState<[string, number][]>(Object.entries({}))
-	const [maxValue, setMaxValue] = useState(0)
+	// const [maxValue, setMaxValue] = useState(0)
 	// const [letterHighlighted, setLetterHighlighted] = useState('')
 	// const currentLetterHighlighted = useRef(letterHighlighted)
 	useEffect(() => {
@@ -48,8 +48,8 @@ export default function Infos({
 		})
 		let lettersInfo = Object.entries(lettersCount)
 		lettersInfo = sortLetters(sortMethod, lettersInfo)
-		const maxNumber = Math.max(...lettersInfo.map((letter) => letter[1]))
-		setMaxValue(maxNumber)
+		// const maxNumber = Math.max(...lettersInfo.map((letter) => letter[1]))
+		// setMaxValue(maxNumber)
 		setInfo(lettersInfo)
 	}, [text, ignoreSpaces, sortMethod, ignoreCase, ignoreSpecialChars])
 
@@ -74,9 +74,10 @@ export default function Infos({
 
 	return (
 		<div
-			className={`bg-gray-950 overflow-auto full pl-3 col-span-6 h-[${
-				info.length * 80
-			}px]`}>
+			className={`bg-gray-950 overflow-auto  pl-3 w-full md:w-8/12   relative`}
+			style={{
+				height: `${(info.length * 40).toString()}px`,
+			}}>
 			<Bar
 				data={{
 					labels: fillArrayUntilLength(
@@ -101,7 +102,10 @@ export default function Infos({
 				}}
 				options={{
 					indexAxis: 'y' as const,
-
+					resizeDelay: 100,
+					onResize() {
+						console.log('hey')
+					},
 					color: '#123399',
 					animation: {
 						duration: 1000, // Total duration of the race animation
@@ -112,7 +116,7 @@ export default function Infos({
 						},
 					},
 					responsive: true,
-					resizeDelay: 100,
+					// resizeDelay: 100,
 					maintainAspectRatio: false,
 
 					scales: {

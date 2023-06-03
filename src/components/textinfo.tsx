@@ -1,9 +1,15 @@
+import { ISortMethods } from '../types/ISettings'
+
 export default function TextInfos({
-	refTextArea,
 	text,
 	sortMethod,
 	ignoreCase,
 	ignoreSpaces,
+}: {
+	sortMethod: ISortMethods
+	text: string
+	ignoreCase: boolean
+	ignoreSpaces: boolean
 }) {
 	const textSplittedNoSpace = text.split('')
 	const wordsAmount = text.split(' ').length

@@ -38,7 +38,6 @@ function App() {
 							setText(e.currentTarget.innerText)
 						}}></div>
 					<TextInfos
-						refTextArea={textAreaRef}
 						text={text}
 						{...settings}
 					/>

@@ -6,16 +6,19 @@ export default function Checkbox({
 }: {
 	isChecked: boolean
 	setSettings: React.Dispatch<React.SetStateAction<ISettings>>
-	propName: string
+	propName: keyof ISettings
 }) {
 	return (
-		<div
-			className='h-5 w-5 rounded-full'
+		<button
 			onClick={() =>
 				setSettings((oldValue) => {
 					return { ...oldValue, [propName]: !oldValue[propName] }
 				})
 			}
-			style={{ background: isChecked ? '#00ddcc' : '#ee1040' }}></div>
+			className='p-1 bg-gray-800 rounded-full'>
+			<div
+				className='h-4 w-4 rounded-full'
+				style={{ background: isChecked ? '#00ddcc' : '#ee1040' }}></div>
+		</button>
 	)
 }

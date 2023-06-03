@@ -13,19 +13,32 @@ export default function TextInfos({
 	const specialCharAmount = textSplittedNoSpace.filter(
 		(letter: string) => !/^[\w&.-]+$/.test(letter) && letter !== ' ',
 	).length
+	const options = [
+		{
+			title: 'Words',
+			value: wordsAmount,
+		},
+		{
+			title: 'Letters',
+			value: lettersAmount,
+		},
+		{
+			title: 'Special Characters',
+			value: specialCharAmount,
+		},
+	]
 	return (
-		<div className='text-infos'>
-			<table>
-				<tr>
-					<td>Words</td> <td>{wordsAmount}</td>
-				</tr>
-				<tr>
-					<td>Letters</td> <td>{lettersAmount}</td>
-				</tr>
-				<tr>
-					<td>Special Characters</td> <td>{specialCharAmount}</td>
-				</tr>
-			</table>
+		<div className='w-48'>
+			{options.map((option) => {
+				return (
+					<div
+						className='flex justify-between'
+						key={option.title}>
+						<h2>{option.title}</h2>
+						<span>{option.value}</span>
+					</div>
+				)
+			})}
 		</div>
 	)
 }

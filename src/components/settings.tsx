@@ -15,57 +15,54 @@ function Settings({
 		'ALPHABETIC',
 		'BIGGEST',
 	] as ISortMethods[]
+	const checkOptions: { title: string; option: keyof ISettings }[] = [
+		{
+			title: 'Ignore Case',
+			option: 'ignoreCase',
+		},
+		{
+			title: 'Ignore Special Chars',
+			option: 'ignoreSpecialChars',
+		},
+		{
+			title: 'Ignore Spaces',
+			option: 'ignoreSpaces',
+		},
+	]
 	return (
-		<div className='group-focus-within:block group-focus-visible:block group-focus:block bg-gray-900 top-10 hidden px-2 py-1 rounded absolute'>
-			<table className=''>
-				<tr>
-					<th className=''>Sort</th>
-					<th className='setting'>
-						<Options
-							title='Sort'
-							options={sortMethods.map((method) => ({
-								name: method.toLowerCase(),
-								onClick() {
-									setSettings((current) => ({
-										...current,
-										sortMethod: method,
-									}))
-								},
-							}))}
-						/>
-					</th>
-				</tr>
-				<tr>
-					<th className='setting-name'>Ignore spaces</th>
-					<th className='setting'>
+		<div className='peer-focus-within:block focus-within:block group-focus-within:block focus:block hover:block peer-focus-visible:block peer-focus:block bg-gray-900 top-10 hidden px-2 py-1 rounded absolute'>
+			<div className='flex justify-between items-center'>
+				<h2 className=''>Sort</h2>
+				<div className='setting'>
+					<Options
+						title='Sort'
+						options={sortMethods.map((method) => ({
+							name: method.toLowerCase(),
+							onClick() {
+								setSettings((current) => ({
+									...current,
+									sortMethod: method,
+								}))
+							},
+						}))}
+					/>
+				</div>
+			</div>
+
+			{checkOptions.map((option) => (
+				<div
+					className='flex justify-between items-center'
+					key={option.title}>
+					<h2 className='setting-name'>{option.title}</h2>
+					<div className='setting'>
 						<Checkbox
-							isChecked={settings.ignoreSpaces}
+							isChecked={!!settings[option.option]}
 							setSettings={setSettings}
-							propName={'ignoreSpaces'}
+							propName={option.option}
 						/>
-					</th>
-				</tr>
-				<tr>
-					<th className='setting-name'>Ignore case</th>
-					<th className='setting'>
-						<Checkbox
-							isChecked={settings.ignoreCase}
-							setSettings={setSettings}
-							propName='ignoreCase'
-						/>
-					</th>
-				</tr>
-				<tr>
-					<th className='setting-name'>Ignore special characters</th>
-					<th className='setting'>
-						<Checkbox
-							isChecked={settings.ignoreSpecialChars}
-							setSettings={setSettings}
-							propName='ignoreSpecialChars'
-						/>
-					</th>
-				</tr>
-			</table>
+					</div>
+				</div>
+			))}
 		</div>
 	)
 }

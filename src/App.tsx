@@ -3,8 +3,8 @@ import { useRef, useState } from 'react'
 import Infos from './components/infos'
 import Settings from './components/settings'
 import TextInfos from './components/textinfo'
-import { useSettings } from './useSettings'
-import { useTheme } from './themes/useTheme'
+import { useSettings } from './hooks/useSettings'
+import { useTheme } from './hooks/useTheme'
 
 function App() {
 	const [text, setText] = useState('')
@@ -13,31 +13,44 @@ function App() {
 	const textAreaRef = useRef<HTMLDivElement>(null)
 
 	return (
-		<div className='bg-gray-950 w-full h-full px-8 py-4'>
+		<main className='bg-gray-950 w-full min-h-screen px-8 py-4'>
 			<Head
 				setText={setText}
 				setSettings={setSettings}
-				refTextArea={textAreaRef}
 			/>
-			<div className='group relative'>
-				<button className='bg-gray-900 px-2 py-1 rounded mb-5'>Settings</button>
-				{settings.isSettingsOpen && null}
-				<Settings
-					settings={settings}
-					setSettings={setSettings}
-				/>
-				<TextInfos
-					refTextArea={textAreaRef}
+			<div className=' flex flex-col md:grid  grid-cols-10'>
+				<div className=' col-span-4'>
+					<div className='group relative'>
+						<button className='bg-gray-900 px-2 py-1 rounded mb-5 peer'>
+							Settings
+						</button>
+						{settings.isSettingsOpen && null}
+						<Settings
+							settings={settings}
+							setSettings={setSettings}
+						/>
+					</div>
+					<div
+						contentEditable='true'
+						ref={textAreaRef}
+						className='bg-gray-900 rounded px-2 py-1 mb-5'
+						onInput={(e) => {
+							setText(e.currentTarget.innerText)
+						}}></div>
+					<TextInfos
+						refTextArea={textAreaRef}
+						text={text}
+						{...settings}
+					/>
+				</div>
+
+				<Infos
 					text={text}
 					{...settings}
+					refTextArea={textAreaRef}
 				/>
 			</div>
-			<Infos
-				text={text}
-				{...settings}
-				refTextArea={textAreaRef}
-			/>
-		</div>
+		</main>
 	)
 }
 export default App

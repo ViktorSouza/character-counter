@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ISettings } from './types/ISettings'
+import { ISettings } from '../types/ISettings'
 const useSettings = function () {
 	const [settings, setSettings] = useState<ISettings>(
 		(window.localStorage.getItem('settings') &&
@@ -17,23 +17,11 @@ const useSettings = function () {
 			window.localStorage.setItem('settings', JSON.stringify(settings))
 			localStorageSettings = window.localStorage.getItem('settings')
 		}
-		setSettings(() => localStorageSettings && JSON.parse(localStorageSettings))
-	}, [
-		settings.ignoreCase,
-		settings.ignoreSpaces,
-		settings.ignoreSpecialChars,
-		settings.isSettingsOpen,
-		settings.sortMethod,
-	])
+		// setSettings(() => localStorageSettings && JSON.parse(localStorageSettings))
+	}, [])
 	useEffect(() => {
 		window.localStorage.setItem('settings', JSON.stringify(settings))
-	}, [
-		settings.ignoreCase,
-		settings.ignoreSpaces,
-		settings.ignoreSpecialChars,
-		settings.isSettingsOpen,
-		settings.sortMethod,
-	])
+	}, [settings])
 	return [settings, setSettings] as const
 }
 export { useSettings }

@@ -41,9 +41,10 @@ export default function Infos({
 			modifiedText = text.toLowerCase()
 		}
 		modifiedText.split('').forEach((letter) => {
-			// if (/[\n\r\s\t]+/g.test(letter) && ignoreSpaces) return
-			// if (ignoreSpecialChars && !/^[\w&.]+$/.test(letter))
-			return (lettersCount[letter] = (Number(lettersCount[letter]) || 0) + 1)
+			if (letter === ' ' && !ignoreSpaces) return
+			if (/[\n\r\s\t]+/g.test(letter) && ignoreSpaces) return
+			if (ignoreSpecialChars && !/^[\w&.-]+$/.test(letter)) return
+			lettersCount[letter] = (Number(lettersCount[letter]) || 0) + 1
 		})
 		let lettersInfo = Object.entries(lettersCount)
 		lettersInfo = sortLetters(sortMethod, lettersInfo)
@@ -70,28 +71,29 @@ export default function Infos({
 	// }
 	// setEndOfContenteditable(refTextArea)
 	// }, [letterHighlighted, text, refTextArea])
-	const sortedInfos = [...info].sort((a, b) => b[1] - a[1])
-	console.log(sortedInfos)
 
 	return (
-		<div>
+		<div
+			className={`bg-gray-950 overflow-auto full pl-3 col-span-6 h-[${
+				info.length * 80
+			}px]`}>
 			<Bar
 				data={{
 					labels: fillArrayUntilLength(
-						sortedInfos.map((a) => a[0]),
-						20,
+						info.map((letter) =>
+							!/[\n\r\s\t]+/g.test(letter[0]) ? letter[0] : '[space]',
+						),
+						15,
 					),
 
 					datasets: [
 						{
 							label: 'Letters',
-							data: sortedInfos.map((a) => a[1]),
-							borderRadius: 10,
+							data: info.map((a) => a[1]),
+							borderRadius: 5,
 							barThickness: 'flex',
-
-							barPercentage: 1,
-							maxBarThickness: 30,
-							backgroundColor: sortedInfos.map(
+							maxBarThickness: 40,
+							backgroundColor: info.map(
 								(a) => `hsl(${a[0].charCodeAt(0) * 10},50%,50%)`,
 							),
 						},
@@ -101,14 +103,22 @@ export default function Infos({
 					indexAxis: 'y' as const,
 
 					color: '#123399',
+					animation: {
+						duration: 1000, // Total duration of the race animation
+					},
 					elements: {
 						bar: {
 							borderWidth: 2,
 						},
 					},
 					responsive: true,
+					resizeDelay: 100,
+					maintainAspectRatio: false,
+
 					scales: {
 						y: {
+							grid: { color: '#0000' },
+
 							beginAtZero: true,
 						},
 					},
@@ -116,23 +126,6 @@ export default function Infos({
 		</div>
 	)
 }
-function setEndOfContenteditable(
-	contentEditableElement: React.RefObject<HTMLDivElement>,
-) {
-	if (!contentEditableElement.current) return
-
-	const range = document.createRange()
-	const selection = window.getSelection()
-
-	range.selectNodeContents(contentEditableElement.current)
-	range.collapse(false)
-
-	if (selection) {
-		selection.removeAllRanges()
-		selection.addRange(range)
-	}
-}
-
 function fillArrayUntilLength(array: unknown[], desiredLength: number) {
 	if (array.length >= desiredLength) {
 		return array // No need to fill the array further
